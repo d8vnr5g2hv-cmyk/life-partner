@@ -1,0 +1,29 @@
+/* Life Partner — タイトル（Kani Favoriteの新タイトルから） */
+#ttl{position:fixed;inset:0;z-index:100;overflow:hidden;background:#0b0f1e;color:#fff;cursor:pointer;-webkit-user-select:none;user-select:none;max-width:520px;margin:0 auto}
+#ttl.go{transition:opacity .8s ease,filter .8s ease;opacity:0;filter:brightness(2);pointer-events:none}
+.tt-shot{position:absolute;inset:-2%;background-size:cover;background-position:center;opacity:0;will-change:opacity,transform}
+#ttl.tt-s1 .tt-shot.a,#ttl.tt-s2 .tt-shot.a{opacity:1;transition:opacity 1.6s ease;animation:ttDrift 14s ease-in-out infinite alternate}
+#ttl.tt-s2 .tt-shot.b{opacity:1;transition:opacity .9s ease;animation:ttDrift 14s ease-in-out infinite alternate}
+@keyframes ttDrift{from{transform:scale(1.01)}to{transform:scale(1.045) translateY(-.6%)}}
+.tt-vig{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at 50% 40%,transparent 55%,rgba(0,0,20,.35) 100%)}
+.tt-cv{position:absolute;inset:0;z-index:3;pointer-events:none;width:100%;height:100%}
+.tt-bloom{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 42%,rgba(255,255,255,.85),rgba(255,255,255,.25) 40%,transparent 70%)}
+.tt-bloom.on{animation:ttBloom 1.2s ease-out}
+@keyframes ttBloom{25%{opacity:1}100%{opacity:0}}
+.tt-clock{position:absolute;z-index:6;left:20px;top:calc(env(safe-area-inset-top) + 18px);opacity:0;transition:opacity 1.2s .4s;text-shadow:0 2px 12px rgba(20,10,50,.5);pointer-events:none}
+#ttl.tt-s1 .tt-clock,#ttl.tt-s2 .tt-clock{opacity:1}
+.tt-clock b{display:block;font:500 54px/1 'Quicksand','Noto Sans JP',sans-serif;letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.tt-clock small{display:block;margin-top:6px;font:600 13px 'Quicksand',sans-serif;letter-spacing:.18em;color:rgba(255,255,255,.78)}
+.tt-line{position:absolute;z-index:6;left:16px;right:16px;bottom:calc(env(safe-area-inset-bottom) + 15%);opacity:0;transform:translateY(8px);transition:.8s .3s;pointer-events:none;
+  background:rgba(255,255,255,.9);color:#1d2b3a;border-radius:12px;padding:10px 14px;font:500 14px 'Noto Sans JP';box-shadow:0 6px 20px rgba(0,0,30,.3)}
+.tt-line b{display:block;font:900 11px 'Noto Sans JP';color:#1e8cf0;margin-bottom:2px}
+.tt-line.on{opacity:1;transform:none}
+.tt-touch{position:absolute;z-index:6;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 6%);text-align:center;pointer-events:none;font:600 13px 'Quicksand',sans-serif;letter-spacing:.5em;padding-left:.5em;color:rgba(255,255,255,.88);text-shadow:0 1px 8px rgba(20,10,50,.7);opacity:0}
+.tt-touch.on{animation:ttBlink 2.6s ease-in-out infinite}
+@keyframes ttBlink{0%,100%{opacity:.2}50%{opacity:.85}}
+.tt-splash{position:absolute;inset:0;z-index:8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#0b0f1e;transition:opacity 1.2s ease}
+.tt-splash b{font:500 16px 'Quicksand',sans-serif;letter-spacing:.6em;padding-left:.6em;color:rgba(255,255,255,.6);animation:ttBreathe 3s ease-in-out infinite}
+.tt-splash small{font:600 11px 'Quicksand',sans-serif;letter-spacing:.4em;color:rgba(255,255,255,.3)}
+@keyframes ttBreathe{50%{opacity:.4}}
+#ttl.tt-s1 .tt-splash,#ttl.tt-s2 .tt-splash{opacity:0;pointer-events:none}
+@media (prefers-reduced-motion:reduce){.tt-shot{animation:none!important}}

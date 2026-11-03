@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Life Partner">
+<meta name="theme-color" content="#1e8cf0">
+<title>Life Partner</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="title.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ===== ホーム（左：寮｜真ん中：メモロビ｜右：作戦室） ===== -->
+  <section class="view on" id="home">
+    <div class="pan" id="pan">
+      <div class="pg" id="dormPg">
+        <div class="pg-h"><b>寮</b><small>DORMITORY</small></div>
+        <div class="sec"><h3>みんなの部屋 <span>ひとりずつ話す</span></h3><div class="doors" id="doors"></div></div>
+        <div class="sec"><h3>アルバム <span>いいことがあった日に増える</span></h3><div class="album" id="album"></div></div>
+        <p class="note">ホームへは右へ →</p>
+      </div>
+      <div class="pg lob" id="lobPg">
+        <div class="lob-media" id="lobMedia"></div>
+        <canvas class="motes" id="motes"></canvas>
+        <div class="clock"><b id="ckT"></b><small id="ckD"></small></div>
+        <div class="lob-top">
+          <button class="chip-duty" id="dutyChip"></button>
+          <button class="ic-btn mt" id="mtBtn" aria-label="モモトーク"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg><em id="mtBadge"></em></button>
+          <button class="ic-btn gear" id="gearBtn" aria-label="設定"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg></button>
+        </div>
+        <span class="hint l">寮</span><span class="hint r">作戦室</span>
+        <div class="brief" id="brief">
+          <div id="alertBox"></div>
+          <div id="briefBox"></div>
+          <div class="nums" id="nums"></div>
+        </div>
+      </div>
+      <div class="pg" id="opsPg">
+        <div class="pg-h"><b>作戦室</b><small>OPERATIONS</small></div>
+        <div class="sec"><h3>今週の報告 <span>日曜の夜に4人から</span></h3>
+          <div class="big" id="weekNums"></div><div id="weekBody" class="week-body"></div>
+          <button class="btn w sm" id="weekBtn"><span>今すぐ週報をもらう</span></button></div>
+        <div class="sec"><h3>4人に相談する</h3>
+          <div class="chips sm" id="opsChips"><button>今月のお金の作戦</button><button>週末なにする？</button><button>最近しんどい</button><button>転職どうしよう</button></div>
+          <div class="ops-log" id="opsLog"></div>
+          <form class="inrow" id="opsForm"><input id="opsIn" placeholder="相談したいこと"><button class="btn"><span>相談</span></button></form></div>
+        <p class="note">← ホームへは左へ</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 秘書室 ===== -->
+  <section class="view" id="desk">
+    <div class="hero" id="deskHero"><h2><small>SECRETARY ROOM</small>秘書室<span id="deskWho"></span></h2></div>
+    <div class="sec"><h3>予定 <button class="add" data-add="plan">＋</button></h3><div id="dPlan"></div></div>
+    <div class="sec"><h3>今日の3つ <span>タップで完了</span><button class="add" data-add="todo">＋</button></h3><div id="dTodo"></div></div>
+    <div class="sec"><h3>お願いしたこと</h3><div id="dAsk"></div></div>
+    <div class="sec"><h3>生き延びる数字 <button class="add" data-add="money">＋</button></h3>
+      <div class="big" id="dMoney" data-money></div>
+      <div class="q">支払い予定 <span class="mini">払ったらタップ</span></div><div id="dPay"></div>
+      <div class="q">ミカの貯金箱</div>
+      <div class="pig"><span class="pig-i">🐷</span><b id="pigN">¥0</b><button class="btn sm" data-pig="100"><span>100円</span></button><button class="btn sm" data-pig="500"><span>500円</span></button></div>
+      <div class="say" id="pigSay" style="display:none"></div>
+      <button class="link" data-money>お金の設定</button>
+    </div>
+    <div class="sec"><h3>仕事メモ <button class="add" data-add="work">＋</button></h3><div id="dWork"></div></div>
+    <div class="sec"><h3>片付けた記録</h3><div id="dDone" class="done-box"></div></div>
+  </section>
+
+  <!-- ===== 診療所 ===== -->
+  <section class="view" id="clinic">
+    <div class="hero" id="clinicHero"><h2><small>CLINIC</small>アズライトの診療所</h2></div>
+    <div class="sec"><h3>問診 <span>ボタンだけ</span></h3><div id="qBox"></div></div>
+    <div class="sec"><h3>カルテ <span>直近7日</span></h3><div id="karte"></div></div>
+    <div class="sec"><h3>今日の処方箋</h3><div class="say" id="rx"></div></div>
+    <div class="sec"><h3>体調・ご飯を入れる <button class="add" data-add2="health">＋</button></h3><p class="mini">「昼ラーメン」「頭が痛い」なども、＋から一言で入れられます。</p></div>
+  </section>
+
+  <!-- ===== ひと休み ===== -->
+  <section class="view" id="rest">
+    <div class="hero" id="restHero"><h2><small>BREAK ROOM</small>ホシノとひと休み</h2></div>
+    <div class="sec"><h3>聞くだけ <span>アドバイスはしない</span></h3><button class="btn" data-r="listen"><span>ホシノに話す</span></button></div>
+    <div class="sec"><h3>一緒にぼーっとする <span>文字は出ない</span></h3><button class="btn" data-r="zen"><span>ぼーっとする</span></button></div>
+    <div class="sec"><h3>休憩タイマー</h3><div class="timer"><b id="tm">05:00</b><button class="btn" data-r="t5"><span>5分</span></button><button class="btn w" data-r="t15"><span>15分</span></button></div><div class="say" id="tmSay" style="display:none"></div></div>
+  </section>
+
+  <!-- ===== モモトーク ===== -->
+  <section class="view" id="talk">
+    <div class="mt-head"><b>MomoTalk</b></div>
+    <div class="sec flat" id="mtList"></div>
+    <div class="chat" id="chat">
+      <header><button id="chatBack" aria-label="戻る">‹</button><span id="chatName"></span></header>
+      <div class="msgs" id="msgs"></div>
+      <form id="chatForm"><input id="chatIn" placeholder="メッセージ" autocomplete="off" enterkeyhint="send"><button class="btn"><span>送信</span></button></form>
+    </div>
+  </section>
+
+  <button id="fab" aria-label="一言入れる"><span>＋</span></button>
+
+  <nav id="tabs">
+    <button data-v="home" class="on"><i id="tabHomeI"></i>ホーム</button>
+    <button data-v="desk"><i class="ti">📋</i>秘書室</button>
+    <button data-v="clinic"><i class="ti">🩺</i>診療所</button>
+    <button data-v="rest"><i class="ti">☁️</i>ひと休み</button>
+    <button data-v="talk"><i class="ti">💬<em id="tabTalkN"></em></i>モモトーク</button>
+  </nav>
+
+  <!-- 一言入力 -->
+  <div class="sheet" id="inSheet"><div class="in">
+    <div class="in-h"><b>一言でどうぞ</b><label class="ph-btn" aria-label="写真"><svg viewBox="0 0 24 24"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg><input type="file" id="inPhoto" accept="image/*" hidden></label></div>
+    <div class="chips sm" id="inUsual"></div>
+    <form id="inForm"><input id="inText" placeholder="例）金曜19時 坂井さん" autocomplete="off" enterkeyhint="done"></form>
+    <p class="mini" id="inHint"></p>
+  </div></div>
+  <div id="echo"></div>
+  <div id="toast"></div>
+  <div class="zen" id="zen"><small>タップで戻る</small></div>
+
+  <!-- 設定 -->
+  <div class="set" id="set">
+    <header><b>設定</b><button id="setX">閉じる</button></header>
+    <div class="set-tabs" id="setTabs"></div>
+    <div class="set-body" id="setBody"></div>
+  </div>
+</div>
+
+<script src="core.js"></script>
+<script src="oshi.js"></script>
+<script src="data.js"></script>
+<script src="input.js"></script>
+<script src="home.js"></script>
+<script src="desk.js"></script>
+<script src="rooms.js"></script>
+<script src="talk.js"></script>
+<script src="settings.js"></script>
+<script src="lock.js"></script>
+<script src="title.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
